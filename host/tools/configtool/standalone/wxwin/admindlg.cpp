@@ -1,7 +1,7 @@
 // ####ECOSHOSTGPLCOPYRIGHTBEGIN####                                        
 // -------------------------------------------                              
 // This file is part of the eCos host tools.                                
-// Copyright (C) 1998, 1999, 2000, 2003 Free Software Foundation, Inc.      
+// Copyright (C) 1998, 1999, 2000, 2003, 2013, 2014 Free Software Foundation, Inc.      
 //
 // This program is free software; you can redistribute it and/or modify     
 // it under the terms of the GNU General Public License as published by     
@@ -240,8 +240,7 @@ void ecAdminDialog::OnAdd(wxCommandEvent& event)
                 // extract the licence file
 
                 wxString strCommand;
-                strCommand.Printf(wxT("add %s --extract_license"), (const wxChar*) strPathName);
-                strCommand.Replace(wxT("\\"), wxT("/")); // backslashes -> forward slashes for Tcl_EvalFile
+                strCommand.Printf(wxT("add %s --extract_license"), (const wxChar*) ecUtils::NativeToPosixPath(strPathName));
                 EvalTclFile (3, strCommand, _("Adding package"));
 
                 wxString strLicenseFile = m_strRepository + wxString(wxFILE_SEP_PATH) + wxT("pkgadd.txt");
@@ -277,8 +276,7 @@ void ecAdminDialog::OnAdd(wxCommandEvent& event)
                 
                 // add the contents of the package distribution file
                 
-                strCommand.Printf (wxT("add %s --accept_license"), (const wxChar*) strPathName);
-                strCommand.Replace (wxT("\\"), wxT("/")); // backslashes -> forward slashes for Tcl_EvalFile
+                strCommand.Printf (wxT("add %s --accept_license"), (const wxChar*) ecUtils::NativeToPosixPath(strPathName));
                 if (! EvalTclFile (3, strCommand, _("Adding package")))  // if not successful
                 {
                     // try the next file
@@ -474,6 +472,7 @@ bool ecAdminDialog::PopulatePackageTree (const wxString& packageDatabase)
     
     // Add a root item
     wxTreeItemId rootId = m_treeCtrl->AddRoot(_("Packages"), 0, -1);
+    CYG_UNUSED_PARAM(wxTreeItemId, rootId);
 
     // populate the new package tree
     
@@ -521,14 +520,14 @@ bool ecAdminDialog::EvalTclFile(int nargc, const wxString& Argv, const wxString&
 
     wxString strArgc;
     strArgc.Printf (wxT("%d"), nargc);
-    std::string argv0 = ecUtils::UnicodeToStdStr (m_strRepository) + "/ecosadmin.tcl";
+    std::string argv0 = ecUtils::UnicodeToStdStr (ecUtils::NativeToPosixPath (m_strRepository)) + "/ecosadmin.tcl";
     std::string argv = ecUtils::UnicodeToStdStr (Argv);
     std::string argc = ecUtils::UnicodeToStdStr (strArgc);
 
     Tcl_Interp * interp = Tcl_CreateInterp ();
 
 #ifdef __WXMSW__
-    Tcl_Channel outchan = Tcl_OpenFileChannel (interp, "nul", "a+", 777);
+    Tcl_Channel outchan = Tcl_OpenFileChannel (interp, "/dev/null", "a+", 777);
     Tcl_SetStdChannel (outchan, TCL_STDOUT); // direct standard output to NUL:
 #endif
 
@@ -536,6 +535,7 @@ bool ecAdminDialog::EvalTclFile(int nargc, const wxString& Argv, const wxString&
     pszStatus = Tcl_SetVar (interp, "argv", (char*) argv.c_str(), 0);
     pszStatus = Tcl_SetVar (interp, "argc", (char*) argc.c_str(), 0);
     pszStatus = Tcl_SetVar (interp, "gui_mode", "1", 0); // return errors in result string
+    CYG_UNUSED_PARAM(const char *, pszStatus);
     int nStatus = Tcl_EvalFile (interp, (char*) argv0.c_str());
     const char* result = Tcl_GetStringResult (interp);
 

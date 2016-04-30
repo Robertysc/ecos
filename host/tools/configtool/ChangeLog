@@ -1,3 +1,49 @@
+2014-03-13  Andy Jackson  <andy@xylanta.com>
+
+	* standalone/wxwin/admindlg.cpp,
+	  standalone/wxwin/configtooldoc.cpp,
+	  standalone/wxwin/configtree.cpp: Silence "set but unused" variable
+	warnings with recent GCC. [ Bugzilla 1001949 ]
+	* standalone/common/ecosconfig.cxx: Update copyright string.
+	* standalone/wxwin/configtool.cpp,
+	  standalone/wxwin/configtooldoc.cpp,
+	  standalone/wxwin/configtree.cpp,
+	  standalone/wxwin/configtree.h,
+	  standalone/wxwin/filename.cpp,
+	  standalone/wxwin/packagesdlg.cpp,
+	  standalone/wxwin/propertywin.cpp,
+	  standalone/wxwin/runtestsdlg.cpp,
+	  standalone/wxwin/templatesdlg.cpp: Silence unused variable warnings
+	with recent GCC. [ Bugzilla 1001950 ]
+
+2014-02-28  Andy Jackson  <andy@xylanta.com>
+
+	* standalone/wxwin/standalone/wxwin/finddlg.cpp,
+	  standalone/wxwin/msgdlgex.cpp,
+	  standalone/wxwin/packagesdlg.cpp,
+	  standalone/wxwin/packagesdlg.h,
+	  standalone/wxwin/settingsdlg.cpp,
+	  standalone/wxwin/templatesdlg.cpp: Eliminate deprecated wxWidgets
+	calls. [ Bugzilla 1001947 ]
+	* standalone/wxwin/appsettings.cpp,
+	  standalone/wxwin/conflictsdlg.cpp: Silence initialization order
+	compiler warnings with recent GCC. [ Bugzilla 1001948 ]
+	* standalone/wxwin/appsettings.cpp,
+	  standalone/wxwin/conflictsdlg.cpp,
+	  standalonw/wxwin/docsystem.cpp,
+	  standalone/wxwin/ecutils.cpp,
+	  standalone/wxwin/packagesdlg.cpp: Silence miscellaneous compiler
+	warnings with recent GCC. [ Bugzilla 1001951 ]
+	* standalone/wxwin/mainwin.cpp, standalone/wxwin/configtool.cpp:
+	Update copyright strings.
+
+2013-03-15  John Dallaway  <john@dallaway.org.uk>
+
+	* standalone/wxwin/admindlg.cpp: Pass POSIX-style paths to
+	ecosadmin.tcl for recent versions of Cygwin. [ Bugzilla 1001798 ]
+	* standalone/wxwin/mainwin.cpp, standalone/wxwin/configtool.cpp:
+	Update copyright strings.
+
 2012-06-22  John Dallaway  <john@dallaway.org.uk>
 
 	* standalone/wxwin/makefile.gnu: Update linker flags for recent

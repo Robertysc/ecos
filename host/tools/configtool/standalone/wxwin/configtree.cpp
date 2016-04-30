@@ -1,7 +1,7 @@
 // ####ECOSHOSTGPLCOPYRIGHTBEGIN####                                        
 // -------------------------------------------                              
 // This file is part of the eCos host tools.                                
-// Copyright (C) 1998, 1999, 2000, 2008, 2009 Free Software Foundation, Inc.      
+// Copyright (C) 1998, 1999, 2000, 2008, 2009, 2014 Free Software Foundation, Inc.      
 //
 // This program is free software; you can redistribute it and/or modify     
 // it under the terms of the GNU General Public License as published by     
@@ -408,6 +408,7 @@ void ecValueWindow::OnMouseEvent(wxMouseEvent& event)
             m_treeCtrl->SelectItem(item);
             ((ecConfigTreeCtrl*) m_treeCtrl)->GetPropertiesMenu()->SetClientData((void*) TRUE);
             PopupMenu(((ecConfigTreeCtrl*) m_treeCtrl)->GetPropertiesMenu(), event.GetX(), event.GetY());
+            CYG_UNUSED_PARAM(ecConfigItem *, configItem);
         }
         else
         {
@@ -717,6 +718,7 @@ void ecSplitterScrolledWindow::OnProperties(wxCommandEvent& event)
         // or not
         menu = (wxMenu*) obj;
     }
+    CYG_UNUSED_PARAM(wxMenu *, menu);
 
     ecConfigTreeCtrl* treeCtrl = (ecConfigTreeCtrl*) FindWindow(ecID_TREE_CTRL);
     wxASSERT (treeCtrl != NULL) ;
@@ -903,6 +905,7 @@ void ecSplitterScrolledWindow::OnUpdateRestoreDefaults(wxUpdateUIEvent& event)
         ecConfigItem* item = ((ecTreeItemData*) treeCtrl->GetItemData(id))->GetConfigItem();
         
         event.Enable( IsChanged(id, TRUE ) );
+        CYG_UNUSED_PARAM(ecConfigItem *, item);
     }
 }
 

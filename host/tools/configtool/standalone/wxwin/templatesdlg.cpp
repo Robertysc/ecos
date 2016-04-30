@@ -1,7 +1,7 @@
 // ####ECOSHOSTGPLCOPYRIGHTBEGIN####                                        
 // -------------------------------------------                              
 // This file is part of the eCos host tools.                                
-// Copyright (C) 1998, 1999, 2000 Free Software Foundation, Inc.            
+// Copyright (C) 1998, 1999, 2000, 2014 Free Software Foundation, Inc.            
 //
 // This program is free software; you can redistribute it and/or modify     
 // it under the terms of the GNU General Public License as published by     
@@ -350,8 +350,13 @@ void ecTemplatesDialog::ShowDetails(bool show)
     }
     else
     {
+#if wxCHECK_VERSION(2, 8, 0)
+        GetSizer()->Detach(win1);
+        GetSizer()->Detach(win2);
+#else
         GetSizer()->Remove(win1);
         GetSizer()->Remove(win2);
+#endif
         button->SetLabel("&Details >>");
     }
     win1->Show(show);
@@ -380,6 +385,7 @@ void ecTemplatesDialog::OnSelHardwareTemplates(wxCommandEvent& event)
     UpdateDetails (); // display new hardware packages in details box
 
     TransferDataToWindow (); // display new target description
+    CYG_UNUSED_PARAM(wxChoice *, cdlPackageCtrl);
 }
 
 void ecTemplatesDialog::OnSelPackageTemplates(wxCommandEvent& event)
@@ -395,6 +401,7 @@ void ecTemplatesDialog::OnSelPackageTemplates(wxCommandEvent& event)
 	m_template = template_i->c_str();
 	
 	UpdateVersionList (wxT("")); // repopulate template versions combo box and select most recent version
+    CYG_UNUSED_PARAM(wxComboBox *, cdlHardwareCtrl);
 }
 
 void ecTemplatesDialog::OnSelPackageVersion(wxCommandEvent& event)
@@ -447,6 +454,8 @@ void ecTemplatesDialog::UpdateVersionList(const wxString& defaultVersion)
 	
 	// enable the version combo box only if there are multiple versions
 	cdlVersionCtrl->Enable (versions.size () > 1);
+    CYG_UNUSED_PARAM(wxComboBox *, cdlHardwareCtrl);
+    CYG_UNUSED_PARAM(wxChoice *, cdlPackageCtrl);
 }
 
 void ecTemplatesDialog::UpdateDetails()

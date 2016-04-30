@@ -1,7 +1,7 @@
 // ####ECOSHOSTGPLCOPYRIGHTBEGIN####                                        
 // -------------------------------------------                              
 // This file is part of the eCos host tools.                                
-// Copyright (C) 1998, 1999, 2000, 2003, 2005, 2006, 2008, 2009, 2010 Free Software Foundation, Inc.
+// Copyright (C) 1998, 1999, 2000, 2003, 2005, 2006, 2008, 2009, 2010, 2014 Free Software Foundation, Inc.
 //
 // This program is free software; you can redistribute it and/or modify     
 // it under the terms of the GNU General Public License as published by     
@@ -355,6 +355,7 @@ bool ecConfigToolDoc::CanGenerateBuildTree()
     }
     else
         return FALSE;
+    CYG_UNUSED_PARAM(int, nCount);
 
     return TRUE;
 }
@@ -382,6 +383,7 @@ bool ecConfigToolDoc::GenerateBuildTree()
             // copy new MLT files to the build tree as necessary
             bool rc = generate_build_tree (GetCdlConfig(), ecUtils::UnicodeToStdStr(m_strBuildTree.CygPath()), ecUtils::UnicodeToStdStr(m_strInstallTree.CygPath()));
             rc = TRUE;
+            CYG_UNUSED_PARAM(bool, rc);
         }
 
     }
@@ -1307,6 +1309,7 @@ CdlInferenceCallbackResult ecConfigToolDoc::CdlInferenceHandler (CdlTransaction 
         wxGetApp().UnlockValues();
 
     }
+    CYG_UNUSED_PARAM(ecConfigToolDoc *, pDoc);
     return rc;
 }
 
@@ -1360,6 +1363,7 @@ void ecConfigToolDoc::CdlTransactionHandler (const CdlTransactionCallback & data
         (CdlValueSource_Inferred == source) ? "inferred" :
         (CdlValueSource_Wizard   == source) ? "wizard"   : "user"));
 */
+        CYG_UNUSED_PARAM(CdlValueSource, source);
         pControlView->Refresh (strName);
     }
 
@@ -2246,6 +2250,7 @@ bool ecConfigToolDoc::SwitchMemoryLayout (bool bNewTargetPlatform)
         // copy default MLT save files for the selected target/platform from the repository to the build tree if they do not already exist
         CopyMLTFiles();
     }
+    CYG_UNUSED_PARAM(bool, rc);
 
     if (m_strBuildTree.IsEmpty ()) // load the memory layout from the repository
     {
